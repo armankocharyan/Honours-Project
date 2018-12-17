@@ -1,6 +1,8 @@
-import numpy as np 
-import tensorflow as tf 
-import DataReader 
+import numpy as np
+import tensorflow as tf
+import DataReader
+
+#THIS IS THE HANDIDENTIFIER NEURAL NETWORK
 
 class NeuralNetwork:
 
@@ -14,12 +16,12 @@ class NeuralNetwork:
 		self.display_step		= 4 #Display every 4th iteration
 
 		input_layer_n 			= self.dataset.input_dim #Input layer matrix
-		output_layer_n 			= self.dataset.output_dim #Output layer matrix 
+		output_layer_n 			= self.dataset.output_dim #Output layer matrix
 
 		self.x = tf.placeholder("float", [None, input_layer_n], name="x") #Creating place holder for the input matrix
 		self.y = tf.placeholder("float", [None, output_layer_n], name="y") #Creating place holder for the output matrix
-	
-		with tf.name_scope("weights") as scope: #Creating weight matrices and populating them with random numbers 
+
+		with tf.name_scope("weights") as scope: #Creating weight matrices and populating them with random numbers
 			W1 = tf.Variable(tf.random_normal([input_layer_n, hidden_layer_n], stddev=0.1))
 			W2 = tf.Variable(tf.random_normal([hidden_layer_n, hidden_layer_n2], stddev=0.1))
 			W3 = tf.Variable(tf.random_normal([hidden_layer_n2, output_layer_n], stddev=0.1))
@@ -29,13 +31,13 @@ class NeuralNetwork:
 			b2 = tf.Variable(tf.random_normal([hidden_layer_n2], stddev=0.1))
 			b3 = tf.Variable(tf.random_normal([output_layer_n], stddev=0.1))
 
-		with tf.name_scope("model") as scope: #Creating the three output layers 
+		with tf.name_scope("model") as scope: #Creating the three output layers
 			layer_1 = tf.nn.sigmoid(tf.matmul(self.x, W1) + b1) #sigmoid(W[0,0]*i[0] + W[0,1]*i[1] + W[0,2]i[2] + ... + W[0,n]i[0] + b[i])
 			layer_2 = tf.nn.sigmoid(tf.matmul(layer_1, W2) + b2)#sigmoid(W[0,0]*i[0] + W[0,1]*i[1] + W[0,2]i[2] + ... + W[0,n]i[0] + b[i])
 			layer_3 = tf.nn.softmax(tf.matmul(layer_2, W3) + b3)#softmax(W[0,0]*i[0] + W[0,1]*i[1] + W[0,2]i[2] + ... + W[0,n]i[0] + b[i])
 			self.model = layer_3
 
-		with tf.name_scope("objective_function") as scope: #Objective or (activation) function: root mean squared 
+		with tf.name_scope("objective_function") as scope: #Objective or (activation) function: root mean squared
 			self.objective_function = tf.sqrt(tf.reduce_sum(tf.square(tf.subtract(self.model, self.y))))
 
 		with tf.name_scope("train") as scope: #Using Gradient Descent to minimize the cost of the function with respect to weights and biases
@@ -50,8 +52,17 @@ class NeuralNetwork:
 		with tf.Session() as sess:
 			sess.run(self.init)
 			#For all the iterations
+			print("\n")
+			print("Neural Network: Hand Classifier")
+			print("Learning Rate: 0.015")
+			print("Number of Training Iterations: 200")
+			print("Number of Hidden Layers: 2")
+			print("Number of nodes in each Hidden Layer: 300")
+			print("\n")
+
+			print("Starting Training:")
 			for iteration in range(self.training_iteration):
-				avg_cost = 0 
+				avg_cost = 0
 				num_batches = int(self.dataset.num_examples/self.batch_size)
 				for i in range(num_batches):
 					batch_xs, batch_ys = self.dataset.next_batch(self.batch_size) #feed a batch of data from the data set
@@ -62,7 +73,7 @@ class NeuralNetwork:
 					print("Iteration:" + str(iteration+1) +  " Total Cost: ", "{:.9f}".format(avg_cost)) #display cost every 4th iteration
 
 			print("Finished!")
-  
+
 			predictions = tf.equal(tf.argmax(self.model, 1), tf.argmax(self.y, 1))
 			accuracy = tf.reduce_mean(tf.cast(predictions,  tf.float64))
 			print("Accuracy of the predictions: :", accuracy.eval({self.x: self.dataset.testing_X, self.y: self.dataset.testing_y}))
@@ -77,6 +88,5 @@ if __name__== "__main__":
 	hidden_layer_n = 300
 	hidden_layer_n2 = 300
 	nn = NeuralNetwork(learning_rate, training_iteration, batch_size, hidden_layer_n, hidden_layer_n2)
+
 	nn.run()
-
-

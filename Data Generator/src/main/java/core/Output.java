@@ -6,9 +6,11 @@ import java.io.PrintWriter;
 
 public class Output {
 	
+	//this file is used to train the prediction neural network
     private static final String FILE_NAME = "prediction.data.training";
 
-    //
+    // OUTPUTS VALUES TO A FILE 
+    
 	public static void write(String [] dataSet){
         try {
             FileWriter fw = new FileWriter(FILE_NAME,true);

@@ -13,6 +13,8 @@ NUMBER_OF_INPUTS = 11
 NUMBER_OF_OUTPUTS = 2
 
 
+#THIS DATAREADER FILE IS USED TO PARSE FOR THE DECISIONMAKER NEURAL NETWORK
+
 
 #methods that help store the pokerhand data into Data class attributes
 #Start....................

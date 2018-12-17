@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Combination {
 	
+	//COMBINATION CLASS
+	//this class has methods and attributes that recursively find all the subsets combinations in a array list
+	//get combinations is the only public method that gets called
+	
 	private static ArrayList<String> storage = new ArrayList<String>();
 	
 	

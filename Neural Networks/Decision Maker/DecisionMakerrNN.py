@@ -2,6 +2,8 @@ import numpy as np
 import tensorflow as tf
 import DataReader
 
+#THIS IS THE DECISIONMAKER NEURAL NETWORK
+
 class NeuralNetwork:
 
 	def __init__(self, learning_rate, training_iteration, batch_size,
@@ -54,6 +56,15 @@ class NeuralNetwork:
 		with tf.Session() as sess:
 			sess.run(self.init)
 			#For all the iterations
+
+			print("\n")
+			print("Neural Network: Decision Maker")
+			print("Number of Training Iterations: 300")
+			print("Learning Rate: 0.025")
+			print("Number of Hidden Layers: 3")
+			print("Number of nodes in each Hidden Layer: 300")
+			print("\n")
+
 			for iteration in range(self.training_iteration):
 				avg_cost = 0
 				num_batches = int(self.dataset.num_examples/self.batch_size)

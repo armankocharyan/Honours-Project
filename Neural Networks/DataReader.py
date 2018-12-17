@@ -1,6 +1,8 @@
 import numpy as np
-import numpy 
+import numpy
 import csv
+
+#THIS DATAREADER FILE IS USED TO PARSE FOR THE HANDIDENTIFIER NEURAL NETWORK
 
 #CONSTANT VARIABLES:
 
@@ -14,7 +16,7 @@ NUMBER_OF_OUTPUTS = 10
 
 
 
-#methods that help store the pokerhand data into Data class attributes
+#methods that help store the pokerhand data into datasets attributes
 #Start....................
 
 def data_set():
@@ -96,7 +98,7 @@ class Data:
 
 	@property
 	def training_y(self):
-		return self._training_yx  
+		return self._training_yx
 
 	@property
 	def testing_X(self):
@@ -113,7 +115,7 @@ class Data:
 	@property
 	def output_dim(self):
 		return self._output_dim
-	
+
 	@property
 	def input_dim(self):
 		return self._input_dim

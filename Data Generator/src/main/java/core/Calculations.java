@@ -4,6 +4,10 @@ import java.util.ArrayList;
 
 public class Calculations {
 	
+	
+	//THIS CLASS PROVIDES ALL STATIC METHODS THAT ARE USED IN OUR GAME CLASS TO GENERATE GAMES
+	
+	//this function turns a array list into a string array	
 	public static String [] arrayify (ArrayList<String> someList) {
 		
 		String [] invalid = new String [1];
@@ -19,6 +23,7 @@ public class Calculations {
 		return arr;
 	}
 	
+	//returns a list of all possible player hands given his two cards and the 5 shared cards
 	public static ArrayList<String> findPlayerHands(ArrayList<String> playerHand, ArrayList<String> fiveCards) {
 		
 		ArrayList<String> allHands = new ArrayList<String>();
@@ -36,7 +41,7 @@ public class Calculations {
 	     
 		ArrayList<String> fourCards = Combination.getCombination(fiveCards, 4);
 		ArrayList<String> oneCard = Combination.getCombination(playerHand, 1);
-		//second ten
+
 		for(int i = 0; i < fourCards.size(); i++) {
 			
 			for(int j = 0; j < oneCard.size(); j++) {
@@ -56,6 +61,7 @@ public class Calculations {
 	}
 	
 	
+	//finds all the AI hands given the 5 cards, 45 card deck
 	public static ArrayList<String> findAIHands(ArrayList<String> playerHand, ArrayList<String> fiveCards, ArrayList<String> deck) {
 		
 		ArrayList<String> allHands = new ArrayList<String>();
@@ -84,7 +90,7 @@ public class Calculations {
 		return allHands;
 	}
 	
-
+	// returns the best hand out of a list of hands
 	public static String[] findBestHand(ArrayList<String> allCards) {
 		String [] arr = new String [5];
 		
@@ -108,7 +114,7 @@ public class Calculations {
 		return allCards.get(bestIndex).split(" ");
 	}
 	
-	
+	// returns the all the handTypes in an int array with elem[0] being the high card and elem[9] being royal flush
 	public static int[] getPredictions(ArrayList<String> cards) {
 		int [] predictions = new int[10];
 		

@@ -6,6 +6,11 @@ import java.util.Collections;
 
 public class Game {
 	
+	
+	//THIS CLASS CALLS FUNCTIONS FROM OTHER METHODS AND CREATES DATA SETS
+	//DATA SETS ARE OUTPUTED TO THE prediction.data FILE FROM THE MAIN METHOD
+	
+	//this function creates a 52-card deck
 	private static ArrayList<String> createDeck() {
 		
 		ArrayList<String> deck = new ArrayList<String>();
@@ -30,6 +35,7 @@ public class Game {
 		return deck;
 	}
 	
+	//This method returns a data set that can be outputed
 	public static String [] getDataSet() {
 		
 		//creating a deck (size 52 cards)
@@ -45,13 +51,14 @@ public class Game {
 			AITwoCard.add(deck.remove(i));
 			Collections.shuffle(deck);
 		}
+		
 		//setting 5 cards aside
 		ArrayList<String>fiveCards = new ArrayList<String>();
-		
 		for (int i = 0; i < 5; i++) {
 			fiveCards.add(deck.remove(i));
 			Collections.shuffle(deck);
 		}
+		
 		//dealing the other player two cards (our AI doesn't know about these cards)
 		ArrayList<String>otherPlayerTwoCard = new ArrayList<String>();
 		for (int i = 0; i < 2; i++) {
@@ -59,33 +66,15 @@ public class Game {
 			Collections.shuffle(deck);
 		}
 		
-		//Calculating all the 
+		//Finds all the possible hands
 		ArrayList<String> allPlayerHands = Calculations.findAIHands(Combination.getCombination(deck, 2), fiveCards, deck);
 		
-		//ArrayList<String> allCombinations = Combination.getCombination(deck, 2);
-		/*
-		for(int i = 0; i < allPlayerHands.size(); i++) {
-			System.out.println(i + "iteration: " + allPlayerHands.get(i));
-		}
-		*/
-		
-
-		
+		//Finds AI and other players best hands
 		String [] AIHand = Calculations.findBestHand((Calculations.findPlayerHands(AITwoCard, fiveCards)));
 		String [] otherPlayerHand = Calculations.findBestHand((Calculations.findPlayerHands(otherPlayerTwoCard, fiveCards)));
 		
-		/*
-		System.out.println("AIHand: ");
-		for(int i = 0; i < AIHand.length; i++)System.out.print(AIHand[i] + "\t");
-		System.out.println("");
-		System.out.println("Other Player Hand: ");
-		for(int i = 0; i < otherPlayerHand.length; i++)System.out.print(otherPlayerHand[i] + "\t");
-		System.out.println("");
-		System.out.println("Five other cards: ");
-		for(int i = 0; i < fiveCards.size(); i++)System.out.print(fiveCards.get(i) + "\t");
-		System.out.println("");
-		*/
-		
+
+		//Finding the winner
 		String winner = "";
 		if(strategy.getScore(AIHand) > strategy.getScore(otherPlayerHand)) {
 			winner = "1";
@@ -93,13 +82,11 @@ public class Game {
 		else {
 			winner = "0";
 		}
-		//System.out.println("Size of total hands is : " + allPlayerHands.size());
+		
+		//Getting all the hand types
 		int [] arr = Calculations.getPredictions(allPlayerHands);
 		
-		for(int i = 0; i < arr.length; i++) {
-			System.out.print(arr[i] + "\t");
-		}
-		
+		//Creating all the odds
 		float [] floatArr = new float [arr.length];
 		floatArr[0] = (float)arr[0]/(float)allPlayerHands.size();
 		floatArr[1] = (float)arr[1]/(float)allPlayerHands.size();
@@ -112,11 +99,12 @@ public class Game {
 		floatArr[8] = (float)arr[8]/(float)allPlayerHands.size();
 		floatArr[9] = (float)arr[9]/(float)allPlayerHands.size();
 		
-		
-		
-		
+		//Finding the AI hand
 		String AIHandType = strategy.handType(AIHand);
 		
+		
+		
+		//Creating a dataset
 		String [] dataSet = new String [12];
 		
 		dataSet[0] = AIHandType;
@@ -133,12 +121,13 @@ public class Game {
 		dataSet[10] = df.format(floatArr[9]);
 		dataSet[11] = winner;
 		
-		
+		//returning the data set
 		return dataSet;
 	}
 
 	
 	public static void main(String [] args) throws InterruptedException{
+		
 		for(int i = 0; i < 1; i++) {
 			Output.write(Game.getDataSet());
 		}

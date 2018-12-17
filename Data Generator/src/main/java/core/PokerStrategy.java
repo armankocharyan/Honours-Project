@@ -6,6 +6,8 @@ import java.util.LinkedList;
 
 public class PokerStrategy {
 	
+	//HAS ALL THE POKER STRATEGY METHODS THAT CLASSIFY AND RANK HANDS
+	
 	//Constant Variables
 	static final LinkedList<Integer> SPECIAL_STRAIGHT = new LinkedList<Integer>(){{
 		add(2);
