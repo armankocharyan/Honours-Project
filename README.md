@@ -28,7 +28,7 @@ Requirements
 
 To Install Tensorflow
 - Download Python 3.6 or 3.7 from https://www.python.org/downloads/
-- Open Windows command prompt (or any OS terminal) as an admin
+- Open Windows command prompt as an admin
 - Enter "pip install tensorflow"
 
 To Run the neural networks
